@@ -1,0 +1,86 @@
+﻿@model ApplicationCore.Models.MovieDetailsResponseModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container-fluid ">
+    <div class="row"  style="       
+        background-image: url( @Model.BackdropUrl );
+        background-color: rgb(9 28 51 / 0.85);
+        background-blend-mode: darken;
+        background-repeat: no-repeat;
+        background-position: top;
+        background-size: cover;
+        height: 35vh;
+    ">
+        <div class="col-5 h-100">
+            <img src="@Model.PosterUrl"  alt="@Model.Title" style="height: 100%; margin-right: 20%;" class="float-right"/>
+        </div>
+        <div class="col-4">
+            <h3 class="text-white">@Model.Title</h3>
+            <h6 class="text-muted" style="font-size: 10px;">@Model.Tagline</h6>
+            <div class="d-flex justify-content-between">               
+                <h6 class="text-white-50" style="font-size: 10px;">@Model.RunTime m | @Model.ReleaseDate.Value.Year</h6>
+                <div class="d-inline-block mr-xl-5">
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <span class="badge badge-pill badge-secondary" style="font-size: 10px;">@genre.Name</span>
+                    }
+                </div>
+            </div>
+            <div class="badge badge-warning">@Model.Rating</div>
+            <p class="text-white mt-2" style="font-size: 10px;">@Model.Overview</p>
+        </div>
+        <div class="col-3">
+            <div class="container w-75 d-flex justify-content-start align-items-end flex-column mt-5 p-0  float-right">
+                <button type="button" class="btn btn-outline-light mb-3 w-100" style="font-size: 9px"><i class="fa fa-pencil-square-o"></i> REVIEW</button>
+                <button type="button" class="btn btn-outline-light mb-3 w-100"  style="font-size: 9px"><i class="fa fa-play"></i> TRAILER</button>
+                <a class="btn btn-light mb-1 w-100"  style="font-size: 9px" asp-controller="User" asp-action="ConfirmPurchase" asp-route-id="@Model.Id">BUY @Model.Price</a>
+                <button type="button" class="btn btn-light mb-1 w-100"  style="font-size: 9px">WATCH MORE</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-4 h-auto">
+            <div class="container-fluid bg-light h-100">
+                <h6 class="p-2 border-bottom border-secondary">MOVIE FACTS</h6>
+                <ul class="list-group-flush border-0 p-0" style="font-size: 12px;">
+                    <li class="list-group-item border-0"><i class="fa fa-calendar" aria-hidden="true"></i> Release Data  <span class="badge badge-pill badge-secondary"> @Model.ReleaseDate.Value.ToString("MM/dd/yyyy")</span></li>
+                    <li class="list-group-item border-dark"><i class="fa fa-hourglass-half" aria-hidden="true"></i> Run Time <span class="badge badge-pill badge-secondary"> @Model.RunTime m</span></li>
+                    <li class="list-group-item border-dark"><i class="fa fa-money" aria-hidden="true"></i> Box Office  <span class="badge badge-pill badge-secondary"> $ @Model.Revenue</span></li>
+                    <li class="list-group-item border-dark"><i class="fa fa-dollar" aria-hidden="true"></i> Budget  <span class="badge badge-pill badge-secondary"> $ @Model.Budget</span></li>
+                    <li class="list-group-item border-dark"><i class="fa fa-minus-square mr-2" aria-hidden="true"></i><i class="fa fa-external-link" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-8 h-auto">
+            <div class="container-fluid">
+                <h6>CAST</h6>
+                <ul class="list-group-flush border-0 p-2" style="font-size: 12px;">
+                    @foreach (var cast in Model.Casts)
+                    {
+                    <div class="container-fluid">
+                        @{
+                            var parms = new Dictionary<string, string>
+                            {
+                                { "castId",  cast.Id.ToString() },
+                                { "movieId",  Model.Id.ToString() }
+                            };
+                        }
+
+                        <a class="row p-1 text-dark" asp-controller="Cast" asp-action="Details" asp-all-route-data="parms" style="text-decoration: none;">
+                            <img src="@cast.ProfilePath" alt="@cast.Name" class="img-fluid rounded-circle col-1" style="width: 100%;" />
+                            <p class="col-5">@cast.Name</p>
+                            <p class="col-6">@cast.Character</p>
+                        </a>
+                    </div>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>

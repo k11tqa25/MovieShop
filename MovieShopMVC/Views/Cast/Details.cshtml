@@ -1,0 +1,17 @@
+﻿@model ApplicationCore.Models.CastResponseModel
+
+<section class="card align-items-center justify-content-center border-0">
+    <div class=" card-body row p-3 m-0  shadow rounded">
+        <div class="col-5 text-center p-5">
+            <img src="@Model.ProfilePath" alt=""  class="rounded"/>
+        </div>
+        <div class="col-7 text-left p-5">
+            <h1>@Model.Name</h1>
+            <h2>Charactor: @Model.Character</h2>
+            @{
+                var gender = Convert.ToInt32(@Model.Gender) == 2 ? "Male" : "Female";
+            }
+            <h2>Gender: @gender</h2>
+        </div>
+    </div>
+</section>

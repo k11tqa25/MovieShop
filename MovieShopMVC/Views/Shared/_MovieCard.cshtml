@@ -1,0 +1,8 @@
+﻿@model ApplicationCore.Models.MovieCardResponseModel
+
+<div class="card mb-4 shadow bg-light ">
+    @* This syntax is called tax-helper. *@
+    <a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.Id">
+        <img src="@Model.PosterUrl" alt="@Model.Title" class="img-fluid"/>
+    </a>    
+</div>

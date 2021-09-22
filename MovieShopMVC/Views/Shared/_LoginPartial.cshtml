@@ -1,0 +1,32 @@
+﻿@using ApplicationCore.ServiceInterfaces
+@inject ICurrentUser currentUser
+
+@if (User.Identity.IsAuthenticated)
+{
+<div class="navbar-collapse collapse">
+    <div class="dropdown show">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @currentUser.FullName
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Purchased Movies</a>
+            <a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+}
+else
+{
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item pr-4">
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Login</a>
+            </li>
+            <li class="nav-item pr-4">
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Register</a>
+            </li>
+        </ul>
+    </div>
+}
